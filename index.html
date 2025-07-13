@@ -459,22 +459,38 @@
                             </div>
                         </div>
                     </div>
+
+                    <form method="POST" action="/submit-contact-form">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="message">Message:</label>
+  <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+  <button type="submit">Send</button>
+</form>
+
+                    
                     <div class="right-contact">
-                        <form action="" class="contact-form">
+                        <form action="/submit-contact-form.php" method="POST" class="contact-form">
                             <div class="input-control i-c-2">
-                                <input type="text" required placeholder="YOUR NAME">
-                                <input type="email" required placeholder="YOUR EMAIL">
+                                <input type="text" required placeholder="YOUR NAME" id="name" name="name" required>
+                                <input type="email" required placeholder="YOUR EMAIL" id="email" name="email" required>
                             </div>
                             <div class="input-control">
-                                <input type="text" required placeholder="ENTER SUBJECT">
+                                <input type="text" required placeholder="ENTER SUBJECT" id="subject" name="subject" required>
                             </div>
                             <div class="input-control">
-                                <textarea name="" id="" cols="15" rows="8" placeholder="Message Here..."></textarea>
+                                <textarea name="message" id="message" cols="15" rows="8" placeholder="Message Here..." required></textarea>
                             </div>
                             <div class="submit-btn">
-                                <a href="img/Emily Lynch Resume.pdf" class="main-btn">
-                                    <span class="btn-text">Download CV</span>
-                                    <span class="btn-icon"><i class="fas fa-download"></i></span>
+                                <a class="main-btn">
+                                     <button type="submit">Send</button>
+<!--                                     <span class="btn-text">Download CV</span>
+                                    <span class="btn-icon"><i class="fas fa-download"></i></span> -->
                                 </a>
                             </div>
                         </form>
