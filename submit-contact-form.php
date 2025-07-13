@@ -1,4 +1,5 @@
 <?php
+  header("Location: https://emilylynch2023.github.io/portfolio/index.html");
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
