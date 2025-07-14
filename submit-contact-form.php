@@ -1,33 +1,42 @@
-<?php
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
+?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'path/to/PHPMailer/src/Exception.php';
+require 'path/to/PHPMailer/src/PHPMailer.php';
+require 'path/to/PHPMailer/src/SMTP.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
     $fsubject = $_POST["fsubject"]
-    $message = $_POST["message"];
+    $message = $_POST['message'];
 
-    // Validate data
-    if (empty($name) || empty($email) || empty($fsubject) || empty($message)) {
-      http_response_code(400);
-      echo json_encode(["error" => "All fields are required"]);
-      exit();
+    $mail = new PHPMailer(true);
+
+    try {
+        //Server settings
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'emilylynch1598@gmail.com';
+        $mail->Password   = '367705022';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        //Recipients
+        $mail->setFrom('$email', '$name');
+        $mail->addAddress('emilylynch1598@gmail.com', 'Emily Lynch');
+
+        //Content
+        $mail->isHTML(true);
+        $mail->Subject = "$fsubject";
+        $mail->Body    = "Name: $name <br> Email: $email <br> Message: $message";
+
+        $mail->send();
+        echo 'Message has been sent';
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-
-    // Email sending configuration (replace with your actual details)
-    $to = "emilylynch1598@gmail.com";
-    $subject = "New Contact Form Submission";
-    $body = "Name: $name\nEmail: $email\nSubject: $fsubject\nMessage: $message";
-    $headers = "From: $email";
-
-    // Send email
-    if (mail($to, $subject, $body, $headers)) {
-      http_response_code(200);
-      echo json_encode(["success" => true, "message" => "Email sent successfully"]);
-    } else {
-      http_response_code(500);
-      echo json_encode(["error" => "Failed to send email"]);
-    }
-  } else {
-    http_response_code(405); // Method Not Allowed
-    echo json_encode(["error" => "Only POST requests are allowed"]);
-  }
+}
 ?>
